@@ -26,23 +26,42 @@ $(function () {
     })
   }
 
-  function search (searchTerm) {
-    const url = 'https://api.giphy.com/v1/gifs/search'
-    const apiKey = '[ADD YOUR GIPHY API KEY HERE]'
+  async function search (searchTerm) {
 
-    $.ajax({
-      url: url,
-      type: 'GET',
-      data: { q: searchTerm, limit: 50, api_key: apiKey }
-    })
-    .done((response) => {
-      // execute this function if request is successful
-      console.log(response)
-      displayResults(response.data)
-    })
-    .fail(() => {
-      // execute this function if request fails
-      alert('error occurred')
-    })
+    try {
+      const url = 'https://api.giphy.com/v1/gifs/search'
+      const apiKey = 'AHsi14xVR7hhL5dcTxGEMIZVCI039sFw'
+
+      const response =
+        await axios.get(url, {
+          params: {
+            api_key: apiKey,
+            q: searchTerm,
+            limit: 50
+          }
+        })
+
+      console.log(response.data.data)
+      displayResults(response.data.data)
+    } catch(error) {
+      console.log(error)
+    }
+
+
+
+    // $.ajax({
+    //   url: url,
+    //   type: 'GET',
+    //   data: { q: searchTerm, limit: 50, api_key: apiKey }
+    // })
+    // .done((response) => {
+    //   // execute this function if request is successful
+    //   console.log(response)
+    //   displayResults(response.data)
+    // })
+    // .fail(() => {
+    //   // execute this function if request fails
+    //   alert('error occurred')
+    // })
   }
 })
